@@ -1,7 +1,7 @@
 {
- "version": 2,
+ "version": 3,
  "fecha": "2026-10-07",
- "nota": "Catálogo de módulos de IA de «Rueda de Tonalidad». Copia pública en github.com/acbdo6-dot/rueda-ia-catalogo: el programa la lee para saber si hay modelos o motores nuevos. «si»: cuándo se recomienda (gpu, vram_min). Los módulos de un mismo «rol» van de mejor a peor. «build»: versión del motor (llama.cpp bNNNNN; whisper.cpp 10900 = 1.9.0). «motor_min»: versión mínima de llama.cpp que necesita el modelo (el programa actualiza el motor antes). «desde»: versión del catálogo en la que llegó (para avisar de lo nuevo). «porque»: por qué es mejor.",
+ "nota": "Catálogo de módulos de IA de «Rueda de Tonalidad». Copia pública en github.com/acbdo6-dot/rueda-ia-catalogo: el programa la lee para saber si hay modelos o motores nuevos. «si»: cuándo se recomienda (gpu, vram_min). Desde la v36.3, en los profesores decide el programa si caben, con su tamaño y la memoria de la tarjeta y la RAM del equipo; «vram_min» queda para los programas anteriores. Los módulos de un mismo «rol» van de mejor a peor. «build»: versión del motor (llama.cpp bNNNNN; whisper.cpp 10900 = 1.9.0). «motor_min»: versión mínima de llama.cpp que necesita el modelo (el programa actualiza el motor antes). «desde»: versión del catálogo en la que llegó (para avisar de lo nuevo). «porque»: por qué es mejor. «params_b» y «activos_b»: miles de millones de parámetros (los MoE solo usan «activos_b» en cada palabra y pueden repartirse entre la tarjeta y la RAM). «destaca»: en qué destaca, en una frase.",
  "roles": {
   "motor": "Motor",
   "chat": "Profesor (modelo de texto)",
@@ -141,7 +141,111 @@
    ],
    "desde": 1,
    "motor_min": 10896,
-   "porque": "El mejor profesor que cabe en una tarjeta de 24 GB: entiende mejor, explica mejor en español y maneja el programa con herramientas."
+   "porque": "El más completo de los que caben enteros en una tarjeta de 24 GB: el que mejor razona y explica en español, rápido y con margen de memoria para el oído y la voz.",
+   "params_b": 27,
+   "destaca": "Lo mejor en todo: razona, explica en español y maneja el programa con herramientas."
+  },
+  {
+   "id": "chat-gemma4-31b",
+   "rol": "chat",
+   "nombre": "Gemma 4 31B (Q4_K_M)",
+   "desc": "El modelo abierto de Google: denso de 31B, con imagen y herramientas. Cabe en 24 GB con la caché en q8 (la que usa el programa).",
+   "licencia": "Apache-2.0 (Google, Gemma 4) · cuantizado por bartowski",
+   "web": "https://huggingface.co/bartowski/google_gemma-4-31B-it-GGUF",
+   "si": {
+    "gpu": [
+     "nvidia",
+     "otra"
+    ],
+    "vram_min": 21
+   },
+   "calidad": 5,
+   "params_b": 31,
+   "vram_gb": 19.9,
+   "ctx": 16384,
+   "desde": 3,
+   "motor_min": 8746,
+   "destaca": "Tareas de varios pasos, imágenes y quizá un español más natural.",
+   "porque": "Una prueba independiente en 24 GB lo deja casi empatado con Qwen3.8 27B: algo mejor con herramientas de varios pasos (30 de 30 frente a 28) y con imágenes, pero un poco más lento y deja menos memoria libre.",
+   "archivos": [
+    {
+     "url": "https://huggingface.co/bartowski/google_gemma-4-31B-it-GGUF/resolve/619aca7589c72be65dd968de8602ad23d68b5c14/google_gemma-4-31B-it-Q4_K_M.gguf",
+     "sha256": "2959c1b0a4f792493bb0092846ea06aec54547e47be979c282634d938d501b75",
+     "tam": 19598489952
+    }
+   ]
+  },
+  {
+   "id": "chat-qwen38-flash-next",
+   "rol": "chat",
+   "nombre": "Qwen3.8-Flash-Next 125B-A6B (IQ4_XS)",
+   "desc": "MoE gigante: 125B de parámetros, pero solo usa 6B en cada palabra. Pesa 98 GB: va repartido entre la tarjeta y la RAM.",
+   "licencia": "Qwen Community License 1.0 (uso personal libre) · cuantizado por bartowski",
+   "web": "https://huggingface.co/bartowski/Qwen3.8-Flash-Next-GGUF",
+   "si": {
+    "gpu": [
+     "nvidia",
+     "otra"
+    ],
+    "vram_min": 100
+   },
+   "calidad": 5,
+   "params_b": 180,
+   "activos_b": 6,
+   "vram_gb": 22,
+   "ctx": 16384,
+   "desde": 3,
+   "motor_min": 10665,
+   "destaca": "El más listo sobre el papel; como tira de la RAM, escribe más despacio.",
+   "porque": "Según su ficha, supera a Qwen3.8 27B. Solo aparece si tienes RAM de sobra (unos 96 GB o más), porque la mayor parte de su peso vive en la RAM. Aún hay pocas pruebas independientes.",
+   "archivos": [
+    {
+     "url": "https://huggingface.co/bartowski/Qwen3.8-Flash-Next-GGUF/resolve/928589fdb66c6ff07f22ac561e3fbce76553548f/Qwen3.8-Flash-Next-IQ4_XS/Qwen3.8-Flash-Next-IQ4_XS-00001-of-00003.gguf",
+     "sha256": "fc77e3c8ea2b43f7a8a644b54e4edb646cabc139b7ff16e22840d509d2fd89e6",
+     "tam": 39662884992
+    },
+    {
+     "url": "https://huggingface.co/bartowski/Qwen3.8-Flash-Next-GGUF/resolve/928589fdb66c6ff07f22ac561e3fbce76553548f/Qwen3.8-Flash-Next-IQ4_XS/Qwen3.8-Flash-Next-IQ4_XS-00002-of-00003.gguf",
+     "sha256": "43e84f8e3a211be8bb56f0d4d95f9bab2a98198298297f7f944426f347cb4083",
+     "tam": 39599783328
+    },
+    {
+     "url": "https://huggingface.co/bartowski/Qwen3.8-Flash-Next-GGUF/resolve/928589fdb66c6ff07f22ac561e3fbce76553548f/Qwen3.8-Flash-Next-IQ4_XS/Qwen3.8-Flash-Next-IQ4_XS-00003-of-00003.gguf",
+     "sha256": "a806a0382ea6f043b9180baa12956ee8aa2121fdd385dee0d613727e1ddd08b5",
+     "tam": 18419167360
+    }
+   ]
+  },
+  {
+   "id": "chat-qwen36-35b-a3b",
+   "rol": "chat",
+   "nombre": "Qwen3.6 35B-A3B (Q4_K_M)",
+   "desc": "MoE de 35B que solo usa 3B en cada palabra: rapidísimo. Con imagen y herramientas.",
+   "licencia": "Apache-2.0 (Alibaba Qwen) · cuantizado por bartowski",
+   "web": "https://huggingface.co/bartowski/Qwen_Qwen3.6-35B-A3B-GGUF",
+   "si": {
+    "gpu": [
+     "nvidia",
+     "otra"
+    ],
+    "vram_min": 22
+   },
+   "calidad": 4,
+   "params_b": 35,
+   "activos_b": 3,
+   "vram_gb": 22.4,
+   "ctx": 16384,
+   "desde": 3,
+   "motor_min": 9222,
+   "destaca": "La velocidad: contesta casi al instante.",
+   "porque": "Escribe dos o tres veces más rápido que el 27B, porque en cada palabra solo trabaja una parte del modelo. A cambio, razona algo peor en las preguntas largas.",
+   "archivos": [
+    {
+     "url": "https://huggingface.co/bartowski/Qwen_Qwen3.6-35B-A3B-GGUF/resolve/5c2410d71524f4f72b023ce8daf7a80528226d5f/Qwen_Qwen3.6-35B-A3B-Q4_K_M.gguf",
+     "sha256": "b46fedd33e0bfb0cae308aa3c158d0a4b2c4a1d2185a1ed6f093cdaf39064772",
+     "tam": 22285080192
+    }
+   ]
   },
   {
    "id": "chat-qwen35-9b",
@@ -169,7 +273,9 @@
    ],
    "desde": 1,
    "motor_min": 9222,
-   "porque": "Bastante más listo que el 4B, para tarjetas de 10 a 16 GB."
+   "porque": "Bastante más listo que el 4B, para tarjetas de 10 a 16 GB.",
+   "params_b": 9,
+   "destaca": "Tarjetas de 10 a 16 GB."
   },
   {
    "id": "chat-qwen35-4b",
@@ -191,7 +297,9 @@
    ],
    "desde": 1,
    "motor_min": 9222,
-   "porque": "Ligero: funciona en equipos modestos o sin tarjeta."
+   "porque": "Ligero: funciona en equipos modestos o sin tarjeta.",
+   "params_b": 4,
+   "destaca": "Equipos modestos o sin tarjeta gráfica."
   },
   {
    "id": "chat-qwen35-08b",
@@ -214,7 +322,8 @@
     }
    ],
    "desde": 1,
-   "motor_min": 9222
+   "motor_min": 9222,
+   "params_b": 0.8
   },
   {
    "id": "emb-qwen3-06b",
