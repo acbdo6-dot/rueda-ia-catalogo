@@ -1,0 +1,435 @@
+{
+ "version": 2,
+ "fecha": "2026-10-07",
+ "nota": "Catálogo de módulos de IA de «Rueda de Tonalidad». Copia pública en github.com/acbdo6-dot/rueda-ia-catalogo: el programa la lee para saber si hay modelos o motores nuevos. «si»: cuándo se recomienda (gpu, vram_min). Los módulos de un mismo «rol» van de mejor a peor. «build»: versión del motor (llama.cpp bNNNNN; whisper.cpp 10900 = 1.9.0). «motor_min»: versión mínima de llama.cpp que necesita el modelo (el programa actualiza el motor antes). «desde»: versión del catálogo en la que llegó (para avisar de lo nuevo). «porque»: por qué es mejor.",
+ "roles": {
+  "motor": "Motor",
+  "chat": "Profesor (modelo de texto)",
+  "busqueda": "Búsqueda en los libros",
+  "oido-motor": "Oído (motor)",
+  "oido-modelo": "Oído (modelo)",
+  "voz-motor": "Voz (motor)",
+  "voz": "Voz"
+ },
+ "modulos": [
+  {
+   "id": "motor-cuda",
+   "rol": "motor",
+   "nombre": "Motor de IA · NVIDIA (CUDA 12.4)",
+   "desc": "llama.cpp b11447, la versión oficial para tarjetas NVIDIA. Hace funcionar los modelos de texto en la tarjeta gráfica: rapidísimo.",
+   "licencia": "MIT (llama.cpp) · bibliotecas CUDA de NVIDIA (redistribuibles)",
+   "web": "https://github.com/ggml-org/llama.cpp",
+   "plataforma": "win32",
+   "si": {
+    "gpu": [
+     "nvidia"
+    ]
+   },
+   "calidad": 3,
+   "ejecutable": "llama-server.exe",
+   "archivos": [
+    {
+     "url": "https://github.com/ggml-org/llama.cpp/releases/download/b11447/llama-b11447-bin-win-cuda-12.4-x64.zip",
+     "sha256": "348009e8971a53c77eb448c796c01157bdc3ff56ab7aa83a7202743c5b8caf91",
+     "tam": 264476766,
+     "descomprimir": true
+    },
+    {
+     "url": "https://github.com/ggml-org/llama.cpp/releases/download/b11447/cudart-llama-bin-win-cuda-12.4-x64.zip",
+     "sha256": "8c79a9b226de4b3cacfd1f83d24f962d0773be79f1e7b75c6af4ded7e32ae1d6",
+     "tam": 391443627,
+     "descomprimir": true
+    }
+   ],
+   "desde": 1,
+   "build": 11447
+  },
+  {
+   "id": "motor-vulkan",
+   "rol": "motor",
+   "nombre": "Motor de IA · otras tarjetas (Vulkan)",
+   "desc": "llama.cpp b11447 para tarjetas AMD, Intel o NVIDIA antiguas. Algo más lento que el de NVIDIA, pero usa la tarjeta.",
+   "licencia": "MIT",
+   "web": "https://github.com/ggml-org/llama.cpp",
+   "plataforma": "win32",
+   "si": {
+    "gpu": [
+     "otra"
+    ]
+   },
+   "calidad": 2,
+   "ejecutable": "llama-server.exe",
+   "archivos": [
+    {
+     "url": "https://github.com/ggml-org/llama.cpp/releases/download/b11447/llama-b11447-bin-win-vulkan-x64.zip",
+     "sha256": "19a68b5ae38a99e509cd043c1fd0b7d84b1475fa207b6cfa15d9734c5e327d50",
+     "tam": 33338047,
+     "descomprimir": true
+    }
+   ],
+   "desde": 1,
+   "build": 11447
+  },
+  {
+   "id": "motor-cpu",
+   "rol": "motor",
+   "nombre": "Motor de IA · solo procesador",
+   "desc": "llama.cpp b11447 sin tarjeta gráfica. Funciona en cualquier PC, pero solo va bien con modelos pequeños.",
+   "licencia": "MIT",
+   "web": "https://github.com/ggml-org/llama.cpp",
+   "plataforma": "win32",
+   "si": {},
+   "calidad": 1,
+   "ejecutable": "llama-server.exe",
+   "archivos": [
+    {
+     "url": "https://github.com/ggml-org/llama.cpp/releases/download/b11447/llama-b11447-bin-win-cpu-x64.zip",
+     "sha256": "72a918ac5bcb366ae3df69c6514d17d968515952e3245763caabfba2c4e346dd",
+     "tam": 19397966,
+     "descomprimir": true
+    }
+   ],
+   "desde": 1,
+   "build": 11447
+  },
+  {
+   "id": "motor-linux",
+   "rol": "motor",
+   "nombre": "Motor de IA · Linux (procesador)",
+   "desc": "llama.cpp b11447 para Linux. Solo para pruebas.",
+   "licencia": "MIT",
+   "web": "https://github.com/ggml-org/llama.cpp",
+   "plataforma": "linux",
+   "si": {},
+   "calidad": 1,
+   "ejecutable": "llama-server",
+   "archivos": [
+    {
+     "url": "https://github.com/ggml-org/llama.cpp/releases/download/b11447/llama-b11447-bin-ubuntu-x64.tar.gz",
+     "sha256": "f256d5ea6c41153a6ceba37f8d4fe31a729e3296deb915937194660488666f9f",
+     "tam": 17694602,
+     "descomprimir": true,
+     "quitar_carpeta": true
+    }
+   ],
+   "desde": 1,
+   "build": 11447
+  },
+  {
+   "id": "chat-qwen38-27b",
+   "rol": "chat",
+   "nombre": "Qwen3.8 27B (Q4_K_M)",
+   "desc": "El profesor «de verdad»: el mejor modelo que cabe en una tarjeta de 24 GB. Muy bueno en español, sigue instrucciones y maneja el programa con herramientas. Ve imágenes (fase 2).",
+   "licencia": "Apache-2.0 (Alibaba Qwen) · cuantizado por bartowski",
+   "web": "https://huggingface.co/bartowski/Qwen3.8-27B-GGUF",
+   "si": {
+    "gpu": [
+     "nvidia",
+     "otra"
+    ],
+    "vram_min": 20
+   },
+   "calidad": 5,
+   "vram_gb": 20,
+   "ctx": 16384,
+   "archivos": [
+    {
+     "url": "https://huggingface.co/bartowski/Qwen3.8-27B-GGUF/resolve/0c92138c51f112d2f0dc84d5f6d1ebe4b9912b9a/Qwen3.8-27B-Q4_K_M.gguf",
+     "sha256": "880a52af8317974f7b4b064a6bc29ff49e188b91aa218e08eea3078b6b1cc673",
+     "tam": 17442399968
+    }
+   ],
+   "desde": 1,
+   "motor_min": 10896,
+   "porque": "El mejor profesor que cabe en una tarjeta de 24 GB: entiende mejor, explica mejor en español y maneja el programa con herramientas."
+  },
+  {
+   "id": "chat-qwen35-9b",
+   "rol": "chat",
+   "nombre": "Qwen3.5 9B (Q4_K_M)",
+   "desc": "Para tarjetas de 10 a 16 GB. Bueno en español y con herramientas, algo menos fino que el 27B.",
+   "licencia": "Apache-2.0 (Alibaba Qwen) · cuantizado por bartowski",
+   "web": "https://huggingface.co/bartowski/Qwen_Qwen3.5-9B-GGUF",
+   "si": {
+    "gpu": [
+     "nvidia",
+     "otra"
+    ],
+    "vram_min": 9
+   },
+   "calidad": 3,
+   "vram_gb": 9,
+   "ctx": 16384,
+   "archivos": [
+    {
+     "url": "https://huggingface.co/bartowski/Qwen_Qwen3.5-9B-GGUF/resolve/182be2fd6c7bc44887d88a91cb03ff009cc9f549/Qwen_Qwen3.5-9B-Q4_K_M.gguf",
+     "sha256": "d784ce9eda1a5a7b51e8f705a9e6310844bf4f173654d115823c775fdea56d43",
+     "tam": 6169341984
+    }
+   ],
+   "desde": 1,
+   "motor_min": 9222,
+   "porque": "Bastante más listo que el 4B, para tarjetas de 10 a 16 GB."
+  },
+  {
+   "id": "chat-qwen35-4b",
+   "rol": "chat",
+   "nombre": "Qwen3.5 4B (Q4_K_M)",
+   "desc": "Para equipos modestos (como el de tu profe) o sin tarjeta gráfica. Conversa bien; con herramientas se equivoca más.",
+   "licencia": "Apache-2.0 (Alibaba Qwen) · cuantizado por bartowski",
+   "web": "https://huggingface.co/bartowski/Qwen_Qwen3.5-4B-GGUF",
+   "si": {},
+   "calidad": 2,
+   "vram_gb": 4,
+   "ctx": 16384,
+   "archivos": [
+    {
+     "url": "https://huggingface.co/bartowski/Qwen_Qwen3.5-4B-GGUF/resolve/4168f45a16a1290d65a4ec0fa312ae917a4c15d6/Qwen_Qwen3.5-4B-Q4_K_M.gguf",
+     "sha256": "13c16f426047e2de38cd075bdade4a7bcbc8c774384876f677740cda65f8a983",
+     "tam": 3013027808
+    }
+   ],
+   "desde": 1,
+   "motor_min": 9222,
+   "porque": "Ligero: funciona en equipos modestos o sin tarjeta."
+  },
+  {
+   "id": "chat-qwen35-08b",
+   "rol": "chat",
+   "nombre": "Qwen3.5 0.8B (Q4_K_M) · de prueba",
+   "desc": "Diminuto: solo para comprobar que todo funciona. Contesta, pero no esperes un buen profesor.",
+   "licencia": "Apache-2.0 (Alibaba Qwen) · cuantizado por bartowski",
+   "web": "https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF",
+   "si": {
+    "nunca": true
+   },
+   "calidad": 1,
+   "vram_gb": 1,
+   "ctx": 8192,
+   "archivos": [
+    {
+     "url": "https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF/resolve/f36b1ea49a332ede8fe5f389bbf5b3575ef71f48/Qwen_Qwen3.5-0.8B-Q4_K_M.gguf",
+     "sha256": "fb044e93939a70469c905781334f5de1e6c8b608ced6cbc8c9249bd4127d9526",
+     "tam": 579615840
+    }
+   ],
+   "desde": 1,
+   "motor_min": 9222
+  },
+  {
+   "id": "emb-qwen3-06b",
+   "rol": "busqueda",
+   "nombre": "Buscador por significado (Qwen3-Embedding 0.6B)",
+   "desc": "Hace que la búsqueda en los libros entienda lo que preguntas aunque no uses las mismas palabras. Sin él, el profesor busca por palabras (también funciona). Recomendado solo con tarjeta gráfica (sin ella, preparar el índice tardaría mucho).",
+   "licencia": "Apache-2.0 (Alibaba Qwen)",
+   "web": "https://huggingface.co/Qwen/Qwen3-Embedding-0.6B-GGUF",
+   "si": {
+    "gpu": [
+     "nvidia",
+     "otra"
+    ]
+   },
+   "calidad": 2,
+   "vram_gb": 1,
+   "archivos": [
+    {
+     "url": "https://huggingface.co/Qwen/Qwen3-Embedding-0.6B-GGUF/resolve/370f27d7550e0def9b39c1f16d3fbaa13aa67728/Qwen3-Embedding-0.6B-Q8_0.gguf",
+     "sha256": "06507c7b42688469c4e7298b0a1e16deff06caf291cf0a5b278c308249c3e439",
+     "tam": 639150592
+    }
+   ],
+   "desde": 1,
+   "porque": "La búsqueda en los libros entiende lo que preguntas aunque no uses sus mismas palabras."
+  },
+  {
+   "id": "oido-cuda",
+   "rol": "oido-motor",
+   "nombre": "Oído · motor Whisper (NVIDIA)",
+   "desc": "whisper.cpp 1.9.0 para NVIDIA: entiende lo que dices al micrófono en menos de un segundo.",
+   "licencia": "MIT (whisper.cpp) · bibliotecas CUDA de NVIDIA",
+   "web": "https://github.com/ggml-org/whisper.cpp",
+   "plataforma": "win32",
+   "si": {
+    "gpu": [
+     "nvidia"
+    ]
+   },
+   "calidad": 3,
+   "ejecutable": "whisper-server.exe",
+   "archivos": [
+    {
+     "url": "https://github.com/ggml-org/whisper.cpp/releases/download/v1.9.0/whisper-cublas-12.4.0-bin-x64.zip",
+     "sha256": "9c18e266aa428f643462485f2d45223320480b5fd09b320bb7fc5b9c7fda4e92",
+     "tam": 461124610,
+     "descomprimir": true,
+     "quitar_carpeta": true
+    }
+   ],
+   "desde": 1,
+   "build": 10900
+  },
+  {
+   "id": "oido-cpu",
+   "rol": "oido-motor",
+   "nombre": "Oído · motor Whisper (procesador)",
+   "desc": "whisper.cpp 1.9.0 sin tarjeta gráfica. Tarda unos segundos en entenderte.",
+   "licencia": "MIT",
+   "web": "https://github.com/ggml-org/whisper.cpp",
+   "plataforma": "win32",
+   "si": {},
+   "calidad": 1,
+   "ejecutable": "whisper-server.exe",
+   "archivos": [
+    {
+     "url": "https://github.com/ggml-org/whisper.cpp/releases/download/v1.9.0/whisper-bin-x64.zip",
+     "sha256": "00c4304b6be363a224a4b69829df49009f74131df8c3ce6a5878b89a11cd26ef",
+     "tam": 5410599,
+     "descomprimir": true,
+     "quitar_carpeta": true
+    }
+   ],
+   "desde": 1,
+   "build": 10900
+  },
+  {
+   "id": "oido-turbo",
+   "rol": "oido-modelo",
+   "nombre": "Oído · modelo Whisper large-v3-turbo",
+   "desc": "El modelo de Whisper que mejor entiende el español sin ser enorme.",
+   "licencia": "MIT (OpenAI Whisper, convertido por ggml-org)",
+   "web": "https://huggingface.co/ggerganov/whisper.cpp",
+   "si": {
+    "gpu": [
+     "nvidia",
+     "otra"
+    ]
+   },
+   "calidad": 3,
+   "vram_gb": 1.5,
+   "archivos": [
+    {
+     "url": "https://huggingface.co/ggerganov/whisper.cpp/resolve/5359861c739e955e79d9a303bcbc70fb988958b1/ggml-large-v3-turbo-q5_0.bin",
+     "sha256": "394221709cd5ad1f40c46e6031ca61bce88931e6e088c188294c6d5a55ffa7e2",
+     "tam": 574041195
+    }
+   ],
+   "desde": 1,
+   "porque": "Te entiende mucho mejor que el «small», sobre todo con nombres de notas y acordes."
+  },
+  {
+   "id": "oido-small",
+   "rol": "oido-modelo",
+   "nombre": "Oído · modelo Whisper small",
+   "desc": "Más ligero, para equipos sin tarjeta gráfica. Se equivoca algo más.",
+   "licencia": "MIT (OpenAI Whisper, convertido por ggml-org)",
+   "web": "https://huggingface.co/ggerganov/whisper.cpp",
+   "si": {},
+   "calidad": 1,
+   "archivos": [
+    {
+     "url": "https://huggingface.co/ggerganov/whisper.cpp/resolve/5359861c739e955e79d9a303bcbc70fb988958b1/ggml-small-q5_1.bin",
+     "sha256": "ae85e4a935d7a567bd102fe55afc16bb595bdb618e11b2fc7591bc08120411bb",
+     "tam": 190085487
+    }
+   ],
+   "desde": 1
+  },
+  {
+   "id": "voz-motor",
+   "rol": "voz-motor",
+   "nombre": "Voz · motor Piper",
+   "desc": "Piper 2023.11.14-2: convierte el texto en voz en tu PC, sin internet.",
+   "licencia": "MIT (Piper) · espeak-ng GPL-3.0 (pronunciación)",
+   "web": "https://github.com/rhasspy/piper",
+   "plataforma": "win32",
+   "si": {},
+   "calidad": 1,
+   "ejecutable": "piper.exe",
+   "archivos": [
+    {
+     "url": "https://github.com/rhasspy/piper/releases/download/2023.11.14-2/piper_windows_amd64.zip",
+     "sha256": "f3c58906402b24f3a96d92145f58acba6d86c9b5db896d207f78dc80811efcea",
+     "tam": 22477236,
+     "descomprimir": true,
+     "quitar_carpeta": true
+    }
+   ],
+   "desde": 1,
+   "build": 20231114
+  },
+  {
+   "id": "voz-motor-linux",
+   "rol": "voz-motor",
+   "nombre": "Voz · motor Piper (Linux)",
+   "desc": "Piper para Linux. Solo para pruebas.",
+   "licencia": "MIT (Piper) · espeak-ng GPL-3.0",
+   "web": "https://github.com/rhasspy/piper",
+   "plataforma": "linux",
+   "si": {},
+   "calidad": 1,
+   "ejecutable": "piper",
+   "archivos": [
+    {
+     "url": "https://github.com/rhasspy/piper/releases/download/2023.11.14-2/piper_linux_x86_64.tar.gz",
+     "sha256": "a50cb45f355b7af1f6d758c1b360717877ba0a398cc8cbe6d2a7a3a26e225992",
+     "tam": 26460462,
+     "descomprimir": true,
+     "quitar_carpeta": true
+    }
+   ],
+   "desde": 1,
+   "build": 20231114
+  },
+  {
+   "id": "voz-davefx",
+   "rol": "voz",
+   "nombre": "Voz «Dave» (español de España, hombre)",
+   "desc": "Voz masculina clara, de calidad media. Datos de entrenamiento CC0.",
+   "licencia": "Modelo MIT (piper-voices) · datos CC0",
+   "web": "https://huggingface.co/rhasspy/piper-voices/tree/main/es/es_ES/davefx/medium",
+   "si": {},
+   "calidad": 2,
+   "modelo": "es_ES-davefx-medium.onnx",
+   "archivos": [
+    {
+     "url": "https://huggingface.co/rhasspy/piper-voices/resolve/c10ece1aade47bb51c153c893d14e5bf8e5b7117/es/es_ES/davefx/medium/es_ES-davefx-medium.onnx",
+     "sha256": "6658b03b1a6c316ee4c265a9896abc1393353c2d9e1bca7d66c2c442e222a917",
+     "tam": 63201294
+    },
+    {
+     "url": "https://huggingface.co/rhasspy/piper-voices/resolve/c10ece1aade47bb51c153c893d14e5bf8e5b7117/es/es_ES/davefx/medium/es_ES-davefx-medium.onnx.json",
+     "sha256": "0e0dda87c732f6f38771ff274a6380d9252f327dca77aa2963d5fbdf9ec54842",
+     "tam": 4817
+    }
+   ],
+   "desde": 1,
+   "porque": "Voz clara en español de España."
+  },
+  {
+   "id": "voz-sharvard",
+   "rol": "voz",
+   "nombre": "Voz «Sharvard» (español de España, mujer y hombre)",
+   "desc": "Dos voces (mujer y hombre), calidad media. Datos CC BY 3.0 (Universidad de Edimburgo).",
+   "licencia": "Modelo MIT (piper-voices) · datos CC BY 3.0",
+   "web": "https://huggingface.co/rhasspy/piper-voices/tree/main/es/es_ES/sharvard/medium",
+   "si": {},
+   "calidad": 1,
+   "modelo": "es_ES-sharvard-medium.onnx",
+   "archivos": [
+    {
+     "url": "https://huggingface.co/rhasspy/piper-voices/resolve/c10ece1aade47bb51c153c893d14e5bf8e5b7117/es/es_ES/sharvard/medium/es_ES-sharvard-medium.onnx",
+     "sha256": "40febfb1679c69a4505ff311dc136e121e3419a13a290ef264fdf43ddedd0fb1",
+     "tam": 76733615
+    },
+    {
+     "url": "https://huggingface.co/rhasspy/piper-voices/resolve/c10ece1aade47bb51c153c893d14e5bf8e5b7117/es/es_ES/sharvard/medium/es_ES-sharvard-medium.onnx.json",
+     "sha256": "7438c9b699c72b0c3388dae1b68d3f364dc66a2150fe554a1c11f03372957b2c",
+     "tam": 4903
+    }
+   ],
+   "desde": 1,
+   "porque": "Si prefieres voz de mujer."
+  }
+ ],
+ "formato": 2
+}
