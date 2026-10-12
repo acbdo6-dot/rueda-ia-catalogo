@@ -1,7 +1,7 @@
 {
- "version": 3,
- "fecha": "2026-10-07",
- "nota": "Catálogo de módulos de IA de «Rueda de Tonalidad». Copia pública en github.com/acbdo6-dot/rueda-ia-catalogo: el programa la lee para saber si hay modelos o motores nuevos. «si»: cuándo se recomienda (gpu, vram_min). Desde la v36.3, en los profesores decide el programa si caben, con su tamaño y la memoria de la tarjeta y la RAM del equipo; «vram_min» queda para los programas anteriores. Los módulos de un mismo «rol» van de mejor a peor. «build»: versión del motor (llama.cpp bNNNNN; whisper.cpp 10900 = 1.9.0). «motor_min»: versión mínima de llama.cpp que necesita el modelo (el programa actualiza el motor antes). «desde»: versión del catálogo en la que llegó (para avisar de lo nuevo). «porque»: por qué es mejor. «params_b» y «activos_b»: miles de millones de parámetros (los MoE solo usan «activos_b» en cada palabra y pueden repartirse entre la tarjeta y la RAM). «destaca»: en qué destaca, en una frase.",
+ "version": 4,
+ "fecha": "2026-10-12",
+ "nota": "Catálogo de módulos de IA de «Rueda de Tonalidad». Copia pública en github.com/acbdo6-dot/rueda-ia-catalogo: el programa la lee para saber si hay modelos o motores nuevos. «si»: cuándo se recomienda (gpu, vram_min). Desde la v36.3, en los profesores decide el programa si caben, con su tamaño y la memoria de la tarjeta y la RAM del equipo; «vram_min» queda para los programas anteriores. Los módulos de un mismo «rol» van de mejor a peor. «build»: versión del motor (llama.cpp bNNNNN; whisper.cpp 10900 = 1.9.0). «motor_min»: versión mínima de llama.cpp que necesita el modelo (el programa actualiza el motor antes). «desde»: versión del catálogo en la que llegó (para avisar de lo nuevo). «porque»: por qué es mejor. «params_b» y «activos_b»: miles de millones de parámetros (los MoE solo usan «activos_b» en cada palabra y pueden repartirse entre la tarjeta y la RAM). «destaca»: en qué destaca, en una frase. Desde el nº 4: «lector» (lector de partituras en PDF o foto: programas aparte, con licencia AGPL, que el programa solo lanza por línea de comandos) y «vision» (el complemento de imagen de un profesor; «para»: el id del profesor). En «archivos», «extraer» (msi o zip) y «destino» (subcarpeta) son para los programas desde la v38; los anteriores no los usan, y por eso estos módulos llevan «si»: {«nunca»: true} (nunca se recomiendan solos). «lic»: la licencia en corto (SPDX). «motor_omr»: qué lector es.",
  "roles": {
   "motor": "Motor",
   "chat": "Profesor (modelo de texto)",
@@ -9,7 +9,9 @@
   "oido-motor": "Oído (motor)",
   "oido-modelo": "Oído (modelo)",
   "voz-motor": "Voz (motor)",
-  "voz": "Voz"
+  "voz": "Voz",
+  "lector": "Lector de partituras (PDF y fotos)",
+  "vision": "Visión (mira una página)"
  },
  "modulos": [
   {
@@ -538,6 +540,277 @@
    ],
    "desde": 1,
    "porque": "Si prefieres voz de mujer."
+  },
+  {
+   "id": "lector-audiveris",
+   "rol": "lector",
+   "nombre": "Lector de partituras · Audiveris 5.9.0",
+   "desc": "Convierte un PDF (o una foto) de una partitura impresa en MusicXML, que el programa analiza. Lo mejor para PDF limpios de tiendas y ediciones. Trae su propio Java: no instala nada en Windows.",
+   "licencia": "AGPL-3.0 (Audiveris) · programa aparte: Rueda lo lanza por línea de comandos, sin mezclar su código",
+   "lic": "AGPL-3.0",
+   "web": "https://github.com/Audiveris/audiveris",
+   "plataforma": "win32",
+   "si": {
+    "nunca": true
+   },
+   "calidad": 3,
+   "ejecutable": "Audiveris/Audiveris.exe",
+   "motor_omr": "audiveris",
+   "archivos": [
+    {
+     "url": "https://github.com/Audiveris/audiveris/releases/download/5.9.0/Audiveris-5.9.0-windowsConsole-x86_64.msi",
+     "sha256": "7d0b3edcb581526b1a0a6f68fb494692774c14160abd8f1ff7c781dc1b35b560",
+     "tam": 71312465,
+     "extraer": "msi"
+    }
+   ],
+   "desde": 4,
+   "build": 50900,
+   "porque": "En partituras impresas limpias (PDF de tienda o de IMSLP en buena calidad) acierta casi todo: en nuestras pruebas, del 78 al 100 % de los compases exactos. Además marca él mismo los compases cuyo ritmo no cuadra.",
+   "destaca": "PDF de partituras impresas, de varias páginas."
+  },
+  {
+   "id": "lector-homr",
+   "rol": "lector",
+   "nombre": "Lector de fotos de partituras · homr 0.7.0",
+   "desc": "Inteligencia artificial que lee fotos y escaneos torcidos o borrosos (una página cada vez, en JPG o PNG). Más lento que Audiveris y algo menos fino con los PDF limpios, pero aguanta mucho mejor las fotos del móvil.",
+   "licencia": "AGPL-3.0 (homr) · Python 3.13 (PSF) y bibliotecas libres (NumPy, OpenCV, ONNX Runtime, Pillow…) · programa aparte, sin mezclar código",
+   "lic": "AGPL-3.0",
+   "web": "https://github.com/liebharc/homr",
+   "plataforma": "win32",
+   "si": {
+    "nunca": true
+   },
+   "calidad": 2,
+   "ejecutable": "python/python.exe",
+   "motor_omr": "homr",
+   "archivos": [
+    {
+     "url": "https://www.python.org/ftp/python/3.13.16/python-3.13.16-embed-amd64.zip",
+     "sha256": "97dae5274cc54867065e8d5a3226e48c35017ed332a0fdb0e27d5b5821961297",
+     "tam": 11439094,
+     "extraer": "zip",
+     "destino": "python"
+    },
+    {
+     "url": "https://files.pythonhosted.org/packages/0b/a7/71ac2cff56fec219ed242bb11b8efb69fcc4bec75db06fb7bfe35de520e6/certifi-2026.7.22-py3-none-any.whl",
+     "sha256": "62f22742b58a1a33014a2b6b706588a8d7e2a88ae7bd1a6ebe8c992928483775",
+     "tam": 136983,
+     "extraer": "zip",
+     "destino": "python"
+    },
+    {
+     "url": "https://files.pythonhosted.org/packages/9c/76/b8ec57f4e9ee3253541abf95e4a462c0175fe8032dcd070f1f2421240942/charset_normalizer-3.5.2-cp313-cp313-win_amd64.whl",
+     "sha256": "78456a747de8dc58360ffa581f30a002baf5aa28cb262536545e91f113ed7639",
+     "tam": 206489,
+     "extraer": "zip",
+     "destino": "python"
+    },
+    {
+     "url": "https://files.pythonhosted.org/packages/d4/19/0b6647bf5e331521e55d2b63bfbdc210bd9cd605189273f03614a05f702d/colorlog-6.12.0-py3-none-any.whl",
+     "sha256": "30d392604e9110045a2c2aeefc27d7a017abbab63f3a8aee594eac0801df784e",
+     "tam": 12239,
+     "extraer": "zip",
+     "destino": "python"
+    },
+    {
+     "url": "https://files.pythonhosted.org/packages/e8/2d/d2a548598be01649e2d46231d151a6c56d10b964d94043a335ae56ea2d92/flatbuffers-25.12.19-py2.py3-none-any.whl",
+     "sha256": "7634f50c427838bb021c2d66a3d1168e9d199b0607e6329399f04846d42e20b4",
+     "tam": 26661,
+     "extraer": "zip",
+     "destino": "python"
+    },
+    {
+     "url": "https://files.pythonhosted.org/packages/bd/cc/c313f3309b541cf6a3816666a7d9f4e2fdc1d34627281205e126597b0fe5/homr-0.7.0-py3-none-any.whl",
+     "sha256": "84c6028df06e60b1aff158c9049d1876b22137144e319b61bacc41518842c4a9",
+     "tam": 94436,
+     "extraer": "zip",
+     "destino": "python"
+    },
+    {
+     "url": "https://files.pythonhosted.org/packages/58/a2/bb081bab032533a855d44de1d56f8e8426114ff1ba5d1f07a438a0a654f8/idna-3.20-py3-none-any.whl",
+     "sha256": "ab7ae7122974553370f0bdb919e1a960b2cd1bc1ef0276416d896db81c14582c",
+     "tam": 69583,
+     "extraer": "zip",
+     "destino": "python"
+    },
+    {
+     "url": "https://files.pythonhosted.org/packages/50/35/1e0f741f6484815a8ce28f7d1268b48ab33d954e596b8e292493c6e0f539/musicxml-1.4-py3-none-any.whl",
+     "sha256": "d055293ba6aeee2714e2c1ae21f0a5fb18e01109a15d3605ac5222b4cea48803",
+     "tam": 292573,
+     "extraer": "zip",
+     "destino": "python"
+    },
+    {
+     "url": "https://files.pythonhosted.org/packages/90/8c/140a40398a66b4471211be1affdb6ed24c486d581bd28d07b7f2fcb69540/numpy-2.5.4-cp313-cp313-win_amd64.whl",
+     "sha256": "8b4d2fd2d34e5f8c9235ee787de5631a37a28402b15cb80814df973d2be54129",
+     "tam": 12566113,
+     "extraer": "zip",
+     "destino": "python"
+    },
+    {
+     "url": "https://files.pythonhosted.org/packages/4f/bd/0d9f8247b0819385213d09564eda5c52d3673313c2414d51f72883ec24cd/omegaconf-2.4.0-py3-none-any.whl",
+     "sha256": "f141a664c777582405e3cc6e0545ecc79429e79f844995b1a6e71c35946a025c",
+     "tam": 254152,
+     "extraer": "zip",
+     "destino": "python"
+    },
+    {
+     "url": "https://files.pythonhosted.org/packages/c4/86/05ed2056f43b27aaf12ebc592ebd9037a26bed315958cf882f43425fd469/onnxruntime-1.31.0-cp313-cp313-win_amd64.whl",
+     "sha256": "73e0165d58ece068c2a8a1c477c90b38e5a8adbbd399fdfdfd4bd79cbc28ff8d",
+     "tam": 14888306,
+     "extraer": "zip",
+     "destino": "python"
+    },
+    {
+     "url": "https://files.pythonhosted.org/packages/ad/8d/db8673846ee53cbb5de4c2b4decc11cf733e203eb7d5146297869f69bd48/opencv_python_headless-4.14.0.94-cp37-abi3-win_amd64.whl",
+     "sha256": "cbed65415b8f6a9541c705afe3e64795840524d0ff3bc58f507826284a1dc64b",
+     "tam": 41028030,
+     "extraer": "zip",
+     "destino": "python"
+    },
+    {
+     "url": "https://files.pythonhosted.org/packages/63/34/ba1c580383c9eada3711951fef0795c80b829a078d72188184bcab9dd527/packaging-26.3-py3-none-any.whl",
+     "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+     "tam": 129956,
+     "extraer": "zip",
+     "destino": "python"
+    },
+    {
+     "url": "https://files.pythonhosted.org/packages/a6/9b/7a58e61d62be561da3a356fe2384d4059a6345fc130e23ef1c36a5b81d24/pillow-12.3.0-cp313-cp313-win_amd64.whl",
+     "sha256": "1cca606cd25738df4ed873d5ad46bbdb3d83b5cbca291f6b4ff13a4df6b0bbe8",
+     "tam": 7239691,
+     "extraer": "zip",
+     "destino": "python"
+    },
+    {
+     "url": "https://files.pythonhosted.org/packages/8a/55/b77bda4e5e5f5971fb51b07663694690e9afdb9402136c16a522bd621cad/protobuf-7.36.2-cp310-abi3-win_amd64.whl",
+     "sha256": "a300819d441e078a5608c0d3c709796bb548136058fda017ae51d425b44fd353",
+     "tam": 456514,
+     "extraer": "zip",
+     "destino": "python"
+    },
+    {
+     "url": "https://files.pythonhosted.org/packages/ba/42/0a1920d276a0e1ca21dc0d13ee9e3ba10a9a8aa3abac76cd5e5a9f503306/pyclipper-1.4.0-cp313-cp313-win_amd64.whl",
+     "sha256": "d4b2d7c41086f1927d14947c563dfc7beed2f6c0d9af13c42fe3dcdc20d35832",
+     "tam": 104007,
+     "extraer": "zip",
+     "destino": "python"
+    },
+    {
+     "url": "https://files.pythonhosted.org/packages/97/c9/39d5b874e8b28845e4ec2202b5da735d0199dbe5b8fb85f91398814a9a46/pyyaml-6.0.3-cp313-cp313-win_amd64.whl",
+     "sha256": "79005a0d97d5ddabfeeea4cf676af11e647e41d81c9a7722a193022accdb6b7c",
+     "tam": 154090,
+     "extraer": "zip",
+     "destino": "python"
+    },
+    {
+     "url": "https://files.pythonhosted.org/packages/59/07/203065283bba0c5e9c10af3602dc25ab3e59ee54dc2d1d22c8faeabf5ed8/rapidocr-3.10.0-py3-none-any.whl",
+     "sha256": "2fc34e26cd0f48514804a94f8832283039c7334076bff60768b1fed9ad068050",
+     "tam": 27288134,
+     "extraer": "zip",
+     "destino": "python"
+    },
+    {
+     "url": "https://files.pythonhosted.org/packages/a0/f4/c67b0b3f1b9245e8d266f0f112c500d50e5b4e83cb6f3b71b6528104182a/requests-2.34.2-py3-none-any.whl",
+     "sha256": "2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0",
+     "tam": 73075,
+     "extraer": "zip",
+     "destino": "python"
+    },
+    {
+     "url": "https://files.pythonhosted.org/packages/25/ed/7fcd625c9796e61d815ca9545d4e44a16f075f83869c1532206de88f23f1/shapely-2.2.0-cp313-cp313-win_amd64.whl",
+     "sha256": "1eaa2cb64cdedaf65d6bc86f2819c9cd7d6d68f969aa3ebfdc93743ab581f437",
+     "tam": 1790191,
+     "extraer": "zip",
+     "destino": "python"
+    },
+    {
+     "url": "https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl",
+     "sha256": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274",
+     "tam": 11050,
+     "extraer": "zip",
+     "destino": "python"
+    },
+    {
+     "url": "https://files.pythonhosted.org/packages/a7/03/921a3d3c75785aca9ebfbfcabfbc3a1be12e2ab5265deb026d55a5a3f83e/tqdm-4.70.1-py3-none-any.whl",
+     "sha256": "c293e525e6fef9c20e8728fd4612df02a0aa31bb5fe91ecd93e123b1b7bffa73",
+     "tam": 80199,
+     "extraer": "zip",
+     "destino": "python"
+    },
+    {
+     "url": "https://files.pythonhosted.org/packages/66/23/e81a5354859831fcf54d488d33b80ba6133ea84f874a9c0ec40a4881e133/types_Pillow-10.2.0.20240822-py3-none-any.whl",
+     "sha256": "d9dab025aba07aeb12fd50a6799d4eac52a9603488eca09d7662543983f16c5d",
+     "tam": 54354,
+     "extraer": "zip",
+     "destino": "python"
+    },
+    {
+     "url": "https://files.pythonhosted.org/packages/49/d3/b8441a820a491ddfc024b0b0cf0393375b75ea13866d9c66727e54c2fc80/typing_extensions-4.16.0-py3-none-any.whl",
+     "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+     "tam": 45571,
+     "extraer": "zip",
+     "destino": "python"
+    },
+    {
+     "url": "https://files.pythonhosted.org/packages/92/9d/c4e665119135114480843e7ab388fa94d8480650450e6f8e26b70d323a4c/urllib3-2.8.0-py3-none-any.whl",
+     "sha256": "0cf3cae568d36aa9576b28dfb35f11328f1cb974ca7647d9475ebb86c75ac6e3",
+     "tam": 135717,
+     "extraer": "zip",
+     "destino": "python"
+    },
+    {
+     "url": "https://github.com/liebharc/homr/releases/download/onnx_checkpoints/segnet_308-3296ccd40960f90ca6ab9c035cca945675d30a0f.zip",
+     "sha256": "1d4277354a8397a6830ef1279232e6d989c2d254b7451525e53ff3d3754b1f70",
+     "tam": 53214519,
+     "extraer": "zip",
+     "destino": "python/homr/segmentation"
+    },
+    {
+     "url": "https://github.com/liebharc/homr/releases/download/onnx_checkpoints/encoder_pytorch_model_396-f6feedb42ff90087d898b0941a55d040fa6b2903.zip",
+     "sha256": "9d9bc44da68c1180c85173d739edb2d703d90c0dbbdfadc9ebf6636685a5489b",
+     "tam": 48277621,
+     "extraer": "zip",
+     "destino": "python/homr/transformer"
+    },
+    {
+     "url": "https://github.com/liebharc/homr/releases/download/onnx_checkpoints/decoder_pytorch_model_396-f6feedb42ff90087d898b0941a55d040fa6b2903.zip",
+     "sha256": "0a2f023e1ecf41f5f969f2ed4ef80c050ce29a4996c6655056cf36c6104677e8",
+     "tam": 38770614,
+     "extraer": "zip",
+     "destino": "python/homr/transformer"
+    }
+   ],
+   "desde": 4,
+   "build": 700,
+   "porque": "Con una foto torcida y borrosa acertó dos de cada tres compases enteros, donde Audiveris se perdía (14 %).",
+   "destaca": "Fotos del móvil y escaneos malos."
+  },
+  {
+   "id": "vision-qwen38",
+   "rol": "vision",
+   "nombre": "Visión para Qwen3.8 27B (mmproj F16)",
+   "desc": "Complemento que deja al profesor Qwen3.8 27B mirar una imagen (por ejemplo, una página de partitura) y comentarla. Solo es un apoyo: quien lee la partitura nota a nota es el lector.",
+   "licencia": "Apache-2.0 (Alibaba Qwen) · convertido por bartowski",
+   "lic": "Apache-2.0",
+   "web": "https://huggingface.co/bartowski/Qwen3.8-27B-GGUF",
+   "si": {
+    "nunca": true
+   },
+   "calidad": 3,
+   "vram_gb": 1,
+   "para": "chat-qwen38-27b",
+   "archivos": [
+    {
+     "url": "https://huggingface.co/bartowski/Qwen3.8-27B-GGUF/resolve/0c92138c51f112d2f0dc84d5f6d1ebe4b9912b9a/mmproj-Qwen3.8-27B-f16.gguf",
+     "sha256": "cb0a71fe9b84af2552fc6260acf8e9773a29d115c683aba01c72a7ac537b212b",
+     "tam": 927607008
+    }
+   ],
+   "desde": 4,
+   "motor_min": 10896,
+   "porque": "El profesor puede echar un vistazo a la página y contarte qué ve (título, instrumentos, dónde está un pasaje), aunque no la transcribe."
   }
  ],
  "formato": 2
